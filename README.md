@@ -24,4 +24,6 @@ You must provide your forum url to the client. Change this variable with yours.
 
 For smileys settings open Smiley class file and re-edit sSmileyAddress variable with the correct one.
 
+That is a first application in the world. There is no any application sample like this as open source in C#, mobile.
+
 THIS APPLICATION IS UNDER GNU GPL LICENSE.
