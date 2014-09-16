@@ -1,0 +1,159 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Creatalk.forum.ForumPost"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:c4f="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:myrich="clr-namespace:Creatalk.UI.Controls"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True"
+    shell:SystemTray.Opacity="0.0"
+    Loaded="PhoneApplicationPage_Loaded">
+
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut" />
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut" />
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,35,0,28">
+            <Grid Name="logo">
+                <TextBlock Name="vpage" Text="" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <Grid Name="mnotification" Visibility="Collapsed" Background="OrangeRed" Tap="mnotification_Tap">
+                        <Image Source="images/notify1.png" Width="48" HorizontalAlignment="Left"/>
+                        <TextBlock Name="mcount" FontWeight="SemiBold" Text="0" Padding="5" Margin="40,0,0,0" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid Name="notification" Visibility="Collapsed" Background="OrangeRed" Tap="notification_Tap" Margin="15,0,0,0">
+                        <Image Source="images/notify2.png" Width="48" HorizontalAlignment="Left"/>
+                        <TextBlock Name="ncount" FontWeight="SemiBold" Text="0" Padding="5" Margin="40,0,0,0" VerticalAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+            <TextBlock Name="topicName" Text="" Foreground="#FFf0c514" Margin="9,5,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="22" TextWrapping="Wrap"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <ListBox Name="postList" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,10,0,50">
+                            <toolkit:ContextMenuService.ContextMenu>
+                                <toolkit:ContextMenu BorderThickness="0" Background="WhiteSmoke" IsZoomEnabled="False">
+                                    <toolkit:MenuItem Header="Alıntı yap" Click="quote_Click"/>
+                                    <!--<toolkit:MenuItem Header="Şikayet et" Click="report_Click" Visibility="{Binding reportVisible}"/>-->
+                                    <toolkit:MenuItem Header="Mesajı düzenle" Click="edit2_Click" Visibility="{Binding editVisible}"/>
+                                    <toolkit:MenuItem Header="Mesajı sil" Click="delete_Click" Visibility="{Binding delVisible}"/>
+                                </toolkit:ContextMenu>
+                            </toolkit:ContextMenuService.ContextMenu>
+
+                            <Grid>
+                                <Grid Tap="Grid_Tap" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                    <Grid Width="100">
+                                        <Image Source="{Binding pAuthorAvatar}" VerticalAlignment="Top" Height="95" Width="95" HorizontalAlignment="Left"/>
+                                    </Grid>
+                                </Grid>
+
+                                <!--<Border VerticalAlignment="Top" HorizontalAlignment="Left" Width="42" Margin="60,-12,0,0" Background="Black" BorderBrush="Black" BorderThickness="6" CornerRadius="90">
+                                    <Image Source="{Binding userstate}"/>
+                                </Border>-->
+
+                                <Image Source="{Binding userstate}" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+
+                                <StackPanel Margin="110,0,0,0">
+                                    <TextBlock Text="{Binding pAuthorInfo}"/>
+                                    <TextBlock Text="{Binding pTime}"/>
+
+                                    <Grid VerticalAlignment="Top">
+                                        <StackPanel Orientation="Horizontal" Margin="-10,0,0,0" VerticalAlignment="Top">
+                                            <Button Name="edit" Content="düzenle" Visibility="{Binding editVisible}" Height="65" FontSize="20" BorderThickness="1" HorizontalAlignment="Left" Click="edit_Click"/>
+                                            <Button Name="like" Content="beğen" Visibility="{Binding likeVisible}" Height="65" FontSize="20" BorderThickness="1" HorizontalAlignment="Left" Click="like_Click"/>
+                                            <Button Name="unlike" Content="beğ. vazgeç" Visibility="{Binding unlikeVisible}" Height="65" FontSize="20" BorderThickness="1" HorizontalAlignment="Left" Click="unlike_Click"/>
+                                        </StackPanel>
+
+                                        <TextBlock Text="{Binding pLikeCount}" HorizontalAlignment="Right" Style="{StaticResource PhoneTextSubtleStyle}" Tap="TextBlock_Tap"/>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid>
+                                <c4f:ChatBubble BorderBrush="{Binding backGround}" Background="{Binding backGround}" ChatBubbleDirection="UpperLeft" Margin="0,15,0,0">
+                                    <StackPanel>
+                                        <c4f:ChatBubble Visibility="{Binding quoteVisible}" BorderBrush="{Binding quoteGround}" Background="{Binding quoteGround}" ChatBubbleDirection="UpperLeft" Margin="0,0,0,15">
+                                            <StackPanel>
+                                                <!--<TextBlock Text="{Binding quoteMessage}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap"/>-->
+                                                <myrich:MyRichTextBox Text="{Binding quoteMessage}" FontSize="{Binding fSize}"/>
+                                            </StackPanel>
+                                        </c4f:ChatBubble>
+
+                                        <!--<TextBlock Text="{Binding pContent}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap"/>-->
+                                        <myrich:MyRichTextBox Text="{Binding pContent}" FontSize="{Binding fSize}"/>
+
+                                        <HyperlinkButton Name="read" Content="Devamını oku..." Foreground="Black" Margin="0,50,0,0" Visibility="{Binding readVisible}" Click="read_Click"/>
+                                    </StackPanel>
+                                </c4f:ChatBubble>
+                            </Grid>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <ScrollViewer Visibility="Collapsed" Name="sending" Grid.Row="1" MaxHeight="200">
+                <StackPanel>
+                    <c4f:ChatBubbleTextBox Name="message" AcceptsReturn="True" InputScope="Text" Margin="12,6,12,10" ChatBubbleDirection="LowerLeft" TextWrapping="Wrap" SizeChanged="message_SizeChanged"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsMenuEnabled="False">
+            <shell:ApplicationBarIconButton Text="önceki sayfa" IconUri="/images/previous.png" Click="prev_Click" IsEnabled="False"/>
+            <shell:ApplicationBarIconButton Text="hızlı yanıt" IconUri="/images/reply.png" Click="quick_Click" IsEnabled="False"/>
+            <shell:ApplicationBarIconButton Text="yenile" IconUri="/images/refresh.png" Click="refresh_Click"/>
+            <shell:ApplicationBarIconButton Text="sonraki sayfa" IconUri="/images/next.png" Click="next_Click" IsEnabled="False"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="yanıt yaz" Click="reply_Click"/>
+                <shell:ApplicationBarMenuItem Text="ilk sayfaya git" Click="first_Click"/>
+                <shell:ApplicationBarMenuItem Text="son sayfaya git" Click="last_Click"/>
+                <shell:ApplicationBarMenuItem Text="menüye git" Click="menu_Click"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>

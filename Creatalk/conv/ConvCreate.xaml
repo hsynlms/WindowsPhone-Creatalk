@@ -1,0 +1,83 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Creatalk.conv.ConvCreate"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True"
+    shell:SystemTray.Opacity="0.0"
+    Loaded="PhoneApplicationPage_Loaded">
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn" />
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn" />
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut" />
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut" />
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,35,0,28">
+            <TextBlock Text="sohbet başlat" Foreground="#FFf0c514" Margin="9,0,0,0" FontSize="30"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,12">
+            <ScrollViewer Name="itemlist">
+                <StackPanel Name="content">
+                    <StackPanel>
+                        <TextBlock Text="Katılımcılar:" FontSize="23"/>
+                        <TextBox Name="participants" MaxLength="255"/>
+                        <TextBlock Text="*İsimleri virgülle ayırmalısın. En fazla 5 kişiyi davet edebilirsiniz." Style="{StaticResource PhoneTextSubtleStyle}" FontSize="19" TextWrapping="Wrap"/>
+                    </StackPanel>
+
+                    <StackPanel Margin="0,45,0,0">
+                        <TextBlock Text="Başlık:" FontSize="23"/>
+                        <TextBox Name="subject" MaxLength="255" InputScope="Text"/>
+                    </StackPanel>
+
+                    <StackPanel Margin="0,20,0,0">
+                        <TextBlock Text="İçerik:" FontSize="23"/>
+                        <TextBox Name="message" InputScope="Text" AcceptsReturn="True" TextWrapping="Wrap" SizeChanged="message_SizeChanged"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar>
+            <shell:ApplicationBarIconButton Text="başlat" IconUri="/images/create.png" Click="create_Click"/>
+            <shell:ApplicationBarIconButton Text="menü" IconUri="/images/home.png" Click="menu_Click"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>

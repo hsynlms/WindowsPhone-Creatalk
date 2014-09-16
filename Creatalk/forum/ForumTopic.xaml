@@ -1,0 +1,177 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Creatalk.forum.ForumTopic"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True"
+    shell:SystemTray.Opacity="0.0"
+    Loaded="PhoneApplicationPage_Loaded">
+
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut" />
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut" />
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,35,0,0">
+            <Grid Name="logo">
+                <TextBlock Name="vpage" Text="" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <Grid Name="mnotification" Visibility="Collapsed" Background="OrangeRed" Tap="mnotification_Tap">
+                        <Image Source="images/notify1.png" Width="48" HorizontalAlignment="Left"/>
+                        <TextBlock Name="mcount" FontWeight="SemiBold" Text="0" Padding="5" Margin="40,0,0,0" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid Name="notification" Visibility="Collapsed" Background="OrangeRed" Tap="notification_Tap" Margin="15,0,0,0">
+                        <Image Source="images/notify2.png" Width="48" HorizontalAlignment="Left"/>
+                        <TextBlock Name="ncount" FontWeight="SemiBold" Text="0" Padding="5" Margin="40,0,0,0" VerticalAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+            <TextBlock Name="topicName" Text="" Foreground="#FFf0c514" Margin="9,5,0,0" FontSize="22"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,12">
+            <phone:Pivot Name="topics" SelectionChanged="topics_SelectionChanged">
+                <phone:PivotItem Header="normal" Margin="0,0,0,0">
+                    <Grid>
+                        <ListBox Name="ntopicList" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="ntopicList_SelectionChanged">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,40,0,0" VerticalAlignment="Top" toolkit:TiltEffect.IsTiltEnabled="True">
+                                        <toolkit:ContextMenuService.ContextMenu>
+                                            <toolkit:ContextMenu BorderThickness="0" Background="WhiteSmoke" IsZoomEnabled="False">
+                                                <toolkit:MenuItem Header="Favorilere ekle" Click="favori_Click"/>
+                                                <toolkit:MenuItem Header="Konuyu kilitle" Click="lock_Click" Visibility="{Binding lockVisible}"/>
+                                                <toolkit:MenuItem Header="Konu kilidini kaldır" Click="unlock_Click" Visibility="{Binding unlockVisible}"/>
+                                                <toolkit:MenuItem Header="Onayını kaldır" Click="approve_Click" Visibility="{Binding onayVisible}"/>
+                                                <toolkit:MenuItem Header="Konuyu sil" Click="delete_Click" Visibility="{Binding delVisible}"/>
+                                                <toolkit:MenuItem Header="Başlığı düzenle" Click="edit_Click" Visibility="{Binding editVisible}"/>
+                                            </toolkit:ContextMenu>
+                                        </toolkit:ContextMenuService.ContextMenu>
+
+                                        <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
+                                            <Grid Width="120">
+                                                <Image Source="{Binding tAuthorAvatar}" VerticalAlignment="Top" Height="115" Width="115" HorizontalAlignment="Left"/>
+                                            </Grid>
+                                        </Grid>
+
+                                        <StackPanel Margin="130,0,0,0">
+                                            <TextBlock Text="{Binding tTitle}" FontSize="21" FontWeight="SemiBold" TextWrapping="Wrap" MaxHeight="60"/>
+                                            <TextBlock Text="{Binding tAuthorInfo}"/>
+                                            <TextBlock Text="{Binding tLastReplyTime}"/>
+
+                                            <Grid>
+                                                <Image Visibility="{Binding tIsClosed}" Source="/images/locked.png" Width="24" Margin="0,0,0,0" HorizontalAlignment="Left"/>
+
+                                                <Grid HorizontalAlignment="Right" Background="{Binding tUnread}">
+                                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5" Text="{Binding tReplyNumber}"/>
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </phone:PivotItem>
+
+                <phone:PivotItem Header="sabit" Margin="0,0,0,0">
+                    <Grid>
+                        <ListBox Name="stopicList" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="stopicList_SelectionChanged">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,40,0,0" VerticalAlignment="Top" toolkit:TiltEffect.IsTiltEnabled="True">
+                                        <toolkit:ContextMenuService.ContextMenu>
+                                            <toolkit:ContextMenu BorderThickness="0" Background="WhiteSmoke" IsZoomEnabled="False">
+                                                <toolkit:MenuItem Header="Favorilere ekle" Click="favori_Click"/>
+                                                <toolkit:MenuItem Header="Konuyu kilitle" Click="lock_Click" Visibility="{Binding lockVisible}"/>
+                                                <toolkit:MenuItem Header="Konu kilidini kaldır" Click="unlock_Click" Visibility="{Binding unlockVisible}"/>
+                                                <toolkit:MenuItem Header="Onayını kaldır" Click="approve_Click" Visibility="{Binding onayVisible}"/>
+                                                <toolkit:MenuItem Header="Konuyu sil" Click="delete_Click" Visibility="{Binding delVisible}"/>
+                                                <toolkit:MenuItem Header="Başlığı düzenle" Click="edit_Click" Visibility="{Binding editVisible}"/>
+                                            </toolkit:ContextMenu>
+                                        </toolkit:ContextMenuService.ContextMenu>
+
+                                        <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
+                                            <Grid Width="120">
+                                                <Image Source="{Binding tAuthorAvatar}" VerticalAlignment="Top" Height="115" Width="115" HorizontalAlignment="Left"/>
+                                            </Grid>
+                                        </Grid>
+
+                                        <StackPanel Margin="130,0,0,0">
+                                            <TextBlock Text="{Binding tTitle}" FontSize="21" FontWeight="SemiBold" TextWrapping="Wrap" MaxHeight="60"/>
+                                            <TextBlock Text="{Binding tAuthorInfo}"/>
+                                            <TextBlock Text="{Binding tLastReplyTime}"/>
+
+                                            <Grid>
+                                                <Image Visibility="{Binding tIsClosed}" Source="/images/locked.png" Width="24" Margin="0,0,0,0" HorizontalAlignment="Left"/>
+
+                                                <Grid HorizontalAlignment="Right" Background="{Binding tUnread}">
+                                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5" Text="{Binding tReplyNumber}"/>
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </phone:PivotItem>
+            </phone:Pivot>
+        </Grid>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsMenuEnabled="False">
+            <shell:ApplicationBarIconButton Text="önceki sayfa" IconUri="/images/previous.png" Click="prev_Click" IsEnabled="False"/>
+            <shell:ApplicationBarIconButton Text="yenile" IconUri="/images/refresh.png" Click="refresh_Click"/>
+            <shell:ApplicationBarIconButton Text="sonraki sayfa" IconUri="/images/next.png" Click="next_Click" IsEnabled="False"/>
+            <shell:ApplicationBarIconButton Text="menü" IconUri="/images/home.png" Click="menu_Click"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="yeni konu oluştur" Click="new_Click"/>
+                <shell:ApplicationBarMenuItem Text="ilk sayfaya git" Click="last_Click"/>
+                <shell:ApplicationBarMenuItem Text="son sayfaya git" Click="first_Click"/>
+                <shell:ApplicationBarMenuItem Text="tümünü okundu olarak işaretle" Click="read_Click"/>
+                <!--<shell:ApplicationBarMenuItem Text="menüye git" Click="menu_Click"/>-->
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>

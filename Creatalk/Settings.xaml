@@ -1,0 +1,257 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Creatalk.Settings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:c4f="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True"
+    shell:SystemTray.Opacity="0.0"
+    Loaded="PhoneApplicationPage_Loaded">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,12">
+            <phone:Pivot>
+                <phone:PivotItem Header="hesap" Margin="0,15,0,0">
+                    <ScrollViewer>
+                        <StackPanel>
+                            <Button Name="cpass" Content="Şifre değiştirme" Click="cpass_Click"/>
+                            <Button Name="cmail" Content="E-posta değiştirme" Click="cmail_Click"/>
+
+                            <!--<TextBlock Text="Kullanıcı imzası (uygulama içi)" Margin="0,25,0,0"/>
+                            <TextBox Name="mysign" TextChanged="mysign_TextChanged" TextWrapping="Wrap"/>-->
+                        </StackPanel>
+                    </ScrollViewer>
+                </phone:PivotItem>
+
+                <phone:PivotItem Header="içerik" Margin="0,15,0,0">
+                    <ScrollViewer>
+                        <StackPanel ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <StackPanel>
+                                <TextBlock Text="Örnek" HorizontalAlignment="Right" FontSize="{Binding ElementName=fsize, Path=Value}"/>
+                                <Slider Name="fsize" Minimum="20" Maximum="25" SmallChange="1" Value="20" ValueChanged="fsize_ValueChanged"/>
+                            </StackPanel>
+
+                            <StackPanel>
+                                <TextBlock Text="Sayfa başına düşen sohbet mesaj sayısı:"/>
+                                <toolkit:ListPicker Name="sbMesaj" VerticalAlignment="Top" SelectionChanged="sbMesaj_SelectionChanged">
+                                    <toolkit:ListPicker.FullModeItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding}" FontSize="47"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </toolkit:ListPicker.FullModeItemTemplate>
+                                </toolkit:ListPicker>
+                            </StackPanel>
+
+                            <StackPanel Margin="0,25,0,0">
+                                <TextBlock Text="Sayfa başına düşen konuşma sayısı:"/>
+                                <toolkit:ListPicker Name="sbChat" VerticalAlignment="Top" SelectionChanged="sbChat_SelectionChanged">
+                                    <toolkit:ListPicker.FullModeItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding}" FontSize="47"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </toolkit:ListPicker.FullModeItemTemplate>
+                                </toolkit:ListPicker>
+                            </StackPanel>
+
+                            <StackPanel Margin="0,25,0,0">
+                                <TextBlock Text="Sayfa başına düşen konu sayısı:"/>
+                                <toolkit:ListPicker Name="sbTopic" VerticalAlignment="Top" SelectionChanged="sbTopic_SelectionChanged">
+                                    <toolkit:ListPicker.FullModeItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding}" FontSize="47"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </toolkit:ListPicker.FullModeItemTemplate>
+                                </toolkit:ListPicker>
+                            </StackPanel>
+
+                            <StackPanel Margin="0,25,0,0">
+                                <TextBlock Text="Sayfa başına düşen yanıt sayısı:"/>
+                                <toolkit:ListPicker Name="sbPost" VerticalAlignment="Top" SelectionChanged="sbPost_SelectionChanged">
+                                    <toolkit:ListPicker.FullModeItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding}" FontSize="47"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </toolkit:ListPicker.FullModeItemTemplate>
+                                </toolkit:ListPicker>
+                            </StackPanel>
+
+                            <StackPanel Margin="0,25,0,0">
+                                <TextBlock Text="Sayfa başına düşen katılınan konu sayısı:"/>
+                                <toolkit:ListPicker Name="sbParticipate" VerticalAlignment="Top" SelectionChanged="sbParticipate_SelectionChanged">
+                                    <toolkit:ListPicker.FullModeItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding}" FontSize="47"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </toolkit:ListPicker.FullModeItemTemplate>
+                                </toolkit:ListPicker>
+                            </StackPanel>
+
+                            <StackPanel Margin="0,25,0,0">
+                                <TextBlock Text="Listelenecek yeni konu sayısı:"/>
+                                <toolkit:ListPicker Name="sbNew" VerticalAlignment="Top" SelectionChanged="sbNew_SelectionChanged">
+                                    <toolkit:ListPicker.FullModeItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding}" FontSize="47"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </toolkit:ListPicker.FullModeItemTemplate>
+                                </toolkit:ListPicker>
+                            </StackPanel>
+
+                            <StackPanel Margin="0,25,0,0">
+                                <TextBlock Text="Arama sayfasında listelenecek kayıt sayısı:"/>
+                                <toolkit:ListPicker Name="sbSearch" VerticalAlignment="Top" SelectionChanged="sbSearch_SelectionChanged">
+                                    <toolkit:ListPicker.FullModeItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding}" FontSize="47"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </toolkit:ListPicker.FullModeItemTemplate>
+                                </toolkit:ListPicker>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </phone:PivotItem>
+
+                <phone:PivotItem Header="uygulama" Margin="0,15,0,0">
+                    <ScrollViewer>
+                        <StackPanel>
+                            <Button Name="delFav" Content="Favorileri temizle" VerticalAlignment="Top" Click="delFav_Click"/>
+
+                            <toolkit:ListPicker Name="youColor" Header="Konuşma ekranı baloncuğu (siz)" FullModeHeader="Renk seçin" VerticalAlignment="Center" SelectionChanged="youColor_SelectionChanged">
+                                <toolkit:ListPicker.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Rectangle Fill="{Binding cRenk}" Margin="2,2,0,0" Width="26" Height="26"/>
+                                            <TextBlock Text="{Binding cText}" Margin="10,0,0,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </toolkit:ListPicker.ItemTemplate>
+                                <toolkit:ListPicker.FullModeItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="16,21,0,20">
+                                            <Rectangle Fill="{Binding cRenk}" Margin="2,2,0,0" Width="30" Height="30"/>
+                                            <TextBlock Text="{Binding cText}" Margin="10,0,0,0" FontSize="32"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </toolkit:ListPicker.FullModeItemTemplate>
+                            </toolkit:ListPicker>
+
+                            <toolkit:ListPicker Name="heColor" Header="Konuşma ekranı baloncuğu (karşı taraf)" FullModeHeader="Renk seçin" VerticalAlignment="Center" SelectionChanged="heColor_SelectionChanged">
+                                <toolkit:ListPicker.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Rectangle Fill="{Binding cRenk}" Margin="2,2,0,0" Width="26" Height="26"/>
+                                            <TextBlock Text="{Binding cText}" Margin="10,0,0,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </toolkit:ListPicker.ItemTemplate>
+                                <toolkit:ListPicker.FullModeItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="16,21,0,20">
+                                            <Rectangle Fill="{Binding cRenk}" Margin="2,2,0,0" Width="30" Height="30"/>
+                                            <TextBlock Text="{Binding cText}" Margin="10,0,0,0" FontSize="32"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </toolkit:ListPicker.FullModeItemTemplate>
+                            </toolkit:ListPicker>
+
+                            <toolkit:ListPicker Name="postColor" Header="Konuya verilen yanıt baloncuğu (siz)" FullModeHeader="Renk seçin" VerticalAlignment="Center" SelectionChanged="postColor_SelectionChanged">
+                                <toolkit:ListPicker.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Rectangle Fill="{Binding cRenk}" Margin="2,2,0,0" Width="26" Height="26"/>
+                                            <TextBlock Text="{Binding cText}" Margin="10,0,0,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </toolkit:ListPicker.ItemTemplate>
+                                <toolkit:ListPicker.FullModeItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="16,21,0,20">
+                                            <Rectangle Fill="{Binding cRenk}" Margin="2,2,0,0" Width="30" Height="30"/>
+                                            <TextBlock Text="{Binding cText}" Margin="10,0,0,0" FontSize="32"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </toolkit:ListPicker.FullModeItemTemplate>
+                            </toolkit:ListPicker>
+
+                            <toolkit:ListPicker Name="postColorOthers" Header="Konuya verilen yanıt baloncuğu (diğer üyeler)" FullModeHeader="Renk seçin" VerticalAlignment="Center" SelectionChanged="postColorOthers_SelectionChanged">
+                                <toolkit:ListPicker.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Rectangle Fill="{Binding cRenk}" Margin="2,2,0,0" Width="26" Height="26"/>
+                                            <TextBlock Text="{Binding cText}" Margin="10,0,0,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </toolkit:ListPicker.ItemTemplate>
+                                <toolkit:ListPicker.FullModeItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="16,21,0,20">
+                                            <Rectangle Fill="{Binding cRenk}" Margin="2,2,0,0" Width="30" Height="30"/>
+                                            <TextBlock Text="{Binding cText}" Margin="10,0,0,0" FontSize="32"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </toolkit:ListPicker.FullModeItemTemplate>
+                            </toolkit:ListPicker>
+
+                            <toolkit:ListPicker Name="menuTiles" Header="Menü tile rengi" FullModeHeader="Renk seçin" VerticalAlignment="Center" SelectionChanged="menuTiles_SelectionChanged">
+                                <toolkit:ListPicker.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Rectangle Fill="{Binding cRenk}" Margin="2,2,0,0" Width="26" Height="26"/>
+                                            <TextBlock Text="{Binding cText}" Margin="10,0,0,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </toolkit:ListPicker.ItemTemplate>
+                                <toolkit:ListPicker.FullModeItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="16,21,0,20">
+                                            <Rectangle Fill="{Binding cRenk}" Margin="2,2,0,0" Width="30" Height="30"/>
+                                            <TextBlock Text="{Binding cText}" Margin="10,0,0,0" FontSize="32"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </toolkit:ListPicker.FullModeItemTemplate>
+                            </toolkit:ListPicker>
+
+                            <toolkit:ToggleSwitch Name="notifyme" Header="Bildirimler" Content="Kapalı" IsChecked="False" Margin="0,20,0,0" Click="notification_Click" Checked="toggle_Checked" Unchecked="toggle_Unchecked"/>
+
+                            <toolkit:ToggleSwitch Name="showimage" Header="Resimleri göster (gülücükler dahil)" Content="Kapalı" IsChecked="False" Margin="0,20,0,0" Click="showimage_Click" Checked="toggle_Checked" Unchecked="toggle_Unchecked"/>
+
+                            <toolkit:ToggleSwitch Name="autoRefresh" Header="Otomatik yenileme" Content="Kapalı" IsChecked="False" Margin="0,20,0,0" Click="autoRefresh_Click" Checked="toggle_Checked" Unchecked="toggle_Unchecked"/>
+                            <TextBlock Text="*Otomatik yenileme verilerin listelendiği (konular, forumlar vb.) sayfadan başka sayfaya yönlendirilip geri döndüğünüzde otomatik olarak listeyi yeniler. Daha fazla şarj ve internet verisi tüketilir. Ayarı kapatmanız önerilir." TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </phone:PivotItem>
+            </phone:Pivot>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

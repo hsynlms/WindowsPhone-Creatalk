@@ -1,0 +1,171 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Creatalk.conv.ConvSend"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:c4f="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:myrich="clr-namespace:Creatalk.UI.Controls"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True"
+    shell:SystemTray.Opacity="0.0"
+    Loaded="PhoneApplicationPage_Loaded">
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn" />
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn" />
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut" />
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut" />
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,35,0,0">
+            <TextBlock Name="vpage" Text="" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+
+            <Grid>
+                <TextBlock Name="subText" Text="" Margin="9,0,0,0" FontSize="35"/>
+            </Grid>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1">
+            <phone:Pivot Name="pages" Grid.Row="0" SelectionChanged="pages_SelectionChanged">
+                <phone:PivotItem Margin="12,0,12,0">
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <ListBox Name="chatHistory" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,20,0,0" toolkit:TiltEffect.IsTiltEnabled="True">
+                                        <c4f:ChatBubble BorderBrush="{Binding backGround}" Background="{Binding backGround}" HorizontalAlignment="{Binding alignItem}" ChatBubbleDirection="{Binding bubbleAlign}">
+                                            <StackPanel>
+                                                <toolkit:ContextMenuService.ContextMenu>
+                                                    <toolkit:ContextMenu BorderThickness="0" Background="WhiteSmoke" IsZoomEnabled="False">
+                                                        <toolkit:MenuItem Header="Alıntı yap" Click="quote_Click"/>
+                                                    </toolkit:ContextMenu>
+                                                </toolkit:ContextMenuService.ContextMenu>
+
+                                                <c4f:ChatBubble Visibility="{Binding quoteVisible}" BorderBrush="{Binding quoteGround}" Background="{Binding quoteGround}" ChatBubbleDirection="{Binding bubbleAlign}" Margin="0,0,0,15">
+                                                    <StackPanel>
+                                                        <!--<TextBlock Text="{Binding quoteMessage}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap"/>-->
+                                                        <myrich:MyRichTextBox Text="{Binding quoteMessage}" FontSize="{Binding fSize}"/>
+                                                    </StackPanel>
+                                                </c4f:ChatBubble>
+
+                                                <!--<TextBlock Text="{Binding Message}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap"/>-->
+                                                <myrich:MyRichTextBox Text="{Binding Message}" FontSize="{Binding fSize}"/>
+
+                                                <Grid Margin="0,10,0,0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock Foreground="Black" Text="{Binding senderName}" TextAlignment="Left" Style="{StaticResource PhoneTextSubtleStyle}" FontFamily="Segoe WP SemiLight" Grid.Column="0"/>
+                                                    <TextBlock Foreground="Black" Text="{Binding sendDate}" TextAlignment="Right" Style="{StaticResource PhoneTextSubtleStyle}" FontFamily="Segoe WP SemiLight" Grid.Column="1"/>
+                                                </Grid>
+                                            </StackPanel>
+                                        </c4f:ChatBubble>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <ScrollViewer Grid.Row="1" Name="sending" MaxHeight="200">
+                            <StackPanel>
+                                <c4f:ChatBubbleTextBox Name="message" AcceptsReturn="True" InputScope="Text" Margin="12,6,12,10" ChatBubbleDirection="LowerLeft" TextWrapping="Wrap" TextChanged="message_TextChanged" SizeChanged="message_SizeChanged"/>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </phone:PivotItem>
+
+                <phone:PivotItem Margin="12,0,12,12">
+                    <Grid>
+                        <TextBlock Text="katılımcılar" FontSize="60"/>
+
+                        <ListBox Name="participants" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0,110,0,0" SelectionChanged="participants_SelectionChanged">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,20" toolkit:TiltEffect.IsTiltEnabled="True">
+                                        <Grid>
+                                            <Grid Width="70" HorizontalAlignment="Left">
+                                                <Image Source="{Binding cuAvatar}" VerticalAlignment="Top" Height="65" Width="65" HorizontalAlignment="Left"/>
+                                            </Grid>
+
+                                            <TextBlock Text="{Binding cuName}" Margin="80,0,0,0" FontSize="35"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </phone:PivotItem>
+            </phone:Pivot>
+        </Grid>
+
+        <Grid Name="addparticipants" Visibility="Collapsed" Background="#FF454545" Grid.RowSpan="2">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Katılımcı ekleme" FontSize="40" Margin="12"/>
+                <TextBox Name="add_prtcpn" Text="" MaxLength="255" TextChanged="add_prtcpn_TextChanged"/>
+                <TextBlock Text="*İsimleri virgülle ayırmalısın. En fazla 5 kişiyi davet edebilirsiniz." Style="{StaticResource PhoneTextSubtleStyle}" FontSize="19" TextWrapping="Wrap"/>
+                <Button Name="addUser" IsEnabled="False" Content="katılımcı ekle" Width="210" HorizontalAlignment="Right" Click="addUser_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsMenuEnabled="False">
+            <shell:ApplicationBarIconButton Text="önceki sayfa" IconUri="/images/previous.png" Click="prev_Click" IsEnabled="False"/>
+            <shell:ApplicationBarIconButton Text="gönder" IconUri="/images/send.png" Click="send_Click" IsEnabled="False"/>
+            <shell:ApplicationBarIconButton Text="yenile" IconUri="/images/refresh.png" Click="refresh_Click"/>
+            <shell:ApplicationBarIconButton Text="sonraki sayfa" IconUri="/images/next.png" Click="next_Click" IsEnabled="False"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="mesaj yaz" Click="write_Click"/>
+                <shell:ApplicationBarMenuItem Text="katılımcı ekle" Click="add_Click"/>
+                <shell:ApplicationBarMenuItem Text="konuşmayı sil" Click="delete_Click"/>
+                <shell:ApplicationBarMenuItem Text="ilk sayfaya git" Click="first_Click"/>
+                <shell:ApplicationBarMenuItem Text="son sayfaya git" Click="last_Click"/>
+                <shell:ApplicationBarMenuItem Text="menüye git" Click="menu_Click"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>

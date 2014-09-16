@@ -1,0 +1,79 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Creatalk.Search"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True"
+    shell:SystemTray.Opacity="0.0"
+    Loaded="PhoneApplicationPage_Loaded">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,35,0,28">
+            <TextBlock Text="arama yap" Foreground="#FFf0c514" Margin="9,0,0,0" FontSize="30"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <TextBox Name="search" VerticalAlignment="Top" InputScope="Search" MaxLength="200" Margin="0,0,70,0" KeyUp="search_KeyUp"/>
+            <Image Name="find" Source="/images/search.png" Height="75" VerticalAlignment="Top" HorizontalAlignment="Right" Tap="find_Tap"/>
+
+            <Grid Margin="0,80,0,0">
+                <ListBox Name="searchList" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="searchList_SelectionChanged">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,0,0,40" VerticalAlignment="Top" toolkit:TiltEffect.IsTiltEnabled="True">
+                                <toolkit:ContextMenuService.ContextMenu>
+                                    <toolkit:ContextMenu BorderThickness="0" Background="WhiteSmoke" IsZoomEnabled="False">
+                                        <toolkit:MenuItem Header="Favorilere ekle" Click="favori_Click"/>
+                                    </toolkit:ContextMenu>
+                                </toolkit:ContextMenuService.ContextMenu>
+
+                                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
+                                    <Grid Width="120">
+                                        <!--Tap="Grid_Tap"-->
+                                        <Image Source="{Binding sAuthorAvatar}" VerticalAlignment="Top" Height="115" Width="115" HorizontalAlignment="Left"/>
+                                    </Grid>
+
+                                    <Grid Margin="0,20,0,0">
+                                        <Grid Background="{Binding sUnread}">
+                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5" Text="{Binding sReplyNumber}"/>
+                                        </Grid>
+                                    </Grid>
+                                </StackPanel>
+
+                                <StackPanel Margin="130,0,0,0">
+                                    <TextBlock Text="{Binding sTopicTitle}" FontSize="21" FontWeight="SemiBold" TextWrapping="Wrap" MaxHeight="60"/>
+                                    <TextBlock Text="{Binding sShortContent}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding sPostAuthorInfo}" Foreground="Orange" Margin="0,10,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>
