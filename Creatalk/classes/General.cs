@@ -17,7 +17,7 @@ namespace Creatalk.classes
 {
     public class General
     {
-        public static string forum_domain = "http://www.maxicep.com/forum/"; //Buraya tapatalk istemcisini yapacağınız forumun adresini yazmalısınız. Örneğin "http://www.huseyinelmas.net/forum/"
+        public static string forum_domain = ""; //Buraya tapatalk istemcisini yapacağınız forumun adresini yazmalısınız. Örneğin "http://www.huseyinelmas.net/forum/"
         public static string username = "";
         public static string conv_participants = "";
         public static string topic_title = "";
