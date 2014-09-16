@@ -18,6 +18,6 @@ To Use
  * 09.16.2014.
 
 Open General class file and find this line.
-public static string forum_domain = "";
+* public static string forum_domain = "";
 
 You must provide your forum url to the client. Change this variable with yours.
