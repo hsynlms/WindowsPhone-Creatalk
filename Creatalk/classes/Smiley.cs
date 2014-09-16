@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Creatalk.classes
 {
-    public class Smilies
+    public class Smiley
     {
         //you must provide smiley address of forum for the client. If its different, please change with the correct one.
         //foruma ait gülücük dosyalarının adresini isteci için vermeniz gerekiyor. Farklıysa, doğru olanı ile değiştiriniz.

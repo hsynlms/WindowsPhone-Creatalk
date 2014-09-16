@@ -100,7 +100,7 @@
     <Compile Include="classes\MyRichTextBox.cs" />
     <Compile Include="classes\Notification.cs" />
     <Compile Include="classes\Oauth.cs" />
-    <Compile Include="classes\Smilies.cs" />
+    <Compile Include="classes\Smiley.cs" />
     <Compile Include="conv\ConvCreate.xaml.cs">
       <DependentUpon>ConvCreate.xaml</DependentUpon>
     </Compile>

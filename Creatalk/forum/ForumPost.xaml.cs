@@ -414,8 +414,8 @@ namespace Creatalk.forum
 
                     if (App.Session_LoadSession("aImage") == "1")
                     {
-                        c_message = classes.Smilies.GetSmiley(c_message);
-                        quote = classes.Smilies.GetSmiley(quote);
+                        c_message = classes.Smiley.GetSmiley(c_message);
+                        quote = classes.Smiley.GetSmiley(quote);
                     }
 
                     if ((c_message.IndexOf("[url") < 0 || c_message.IndexOf("[img") < 0) && c_message.IndexOf("http://") >= 0)

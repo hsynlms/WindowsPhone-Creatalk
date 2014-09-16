@@ -325,8 +325,8 @@ namespace Creatalk.conv
 
                     if (App.Session_LoadSession("aImage") == "1")
                     {
-                        c_message = classes.Smilies.GetSmiley(c_message);
-                        quote = classes.Smilies.GetSmiley(quote); //hdp.
+                        c_message = classes.Smiley.GetSmiley(c_message);
+                        quote = classes.Smiley.GetSmiley(quote); //hdp.
                     }
 
                     if ((c_message.IndexOf("[url") < 0 || c_message.IndexOf("[img") < 0) && c_message.IndexOf("http://") >= 0)
