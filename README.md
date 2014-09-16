@@ -3,9 +3,6 @@ Creatalk
 
 A simple and faster Tapatalk Client for C#, Windows Phone.
 
-To Use
-========
-
  * This application designed for tapatalk APIs (and tested only on xenforo)
  * Development is in progress for other forum bases (e.g. vBulletin)
  * You may need to change something in classes files.
@@ -17,7 +14,12 @@ To Use
  * Open source.
  * 09.16.2014.
 
+How To Use
+========
+
 Open General class file and find this line.
 * public static string forum_domain = "";
 
 You must provide your forum url to the client. Change this variable with yours.
+
+For smileys settings open Smilies class file and re-edit sSmileyAddress variable with the correct one.
