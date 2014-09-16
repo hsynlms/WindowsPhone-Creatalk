@@ -23,3 +23,5 @@ Open General class file and find this line.
 You must provide your forum url to the client. Change this variable with yours.
 
 For smileys settings open Smiley class file and re-edit sSmileyAddress variable with the correct one.
+
+THIS APPLICATION IS UNDER GNU GPL LICENSE.
