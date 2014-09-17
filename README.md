@@ -10,7 +10,7 @@ A simple and faster Tapatalk Client for C#, Windows Phone.
  * By the way, translating different languages (e.g. English, Spanish etc.) is in progress. You can give us some support about this translation. Please contact us.
  * Owner Hüseyin ELMAS
  * http://www.huseyinelmas.net
- * For all social platforms use this keyword to find me "hsynlms" :]
+ * -almost- For all social platforms use this keyword to find me "hsynlms" :]
  * 09.16.2014.
 
 How To Use
